@@ -1,0 +1,20 @@
+
+version: '3.3'
+services:
+  apils:
+    container_name: 'apils'
+    build: './'
+    ports:
+      - '8040:8040'
+    volumes:
+      - './:/go/src/app'
+    depends_on:
+      - 'mongols'
+  mongols:
+    image: 'mongo:4.4.6'
+    container_name: 'mongols'
+    volumes:
+      - /home/mongodb/linkshortener:/data/db
+    ports:
+      - '27117:27017'
+    restart: unless-stopped
