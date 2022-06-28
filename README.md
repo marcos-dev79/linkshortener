@@ -11,14 +11,19 @@ https://www.docker.com/
 
 To shorten an URL, just http POST to http://localhost:8040/api/shorten with the following payload (example):
 
+```json
 {
     "url":"https://twitter.com/"
 }
+```
 
 The api will return the following:
+
+```json
 {
     "id": "62bb89bc994c04314169f066",
     "shortened_url": "http://localhost:8040/7da105de659ce893"
 }
+```
 
 Then, just throw the shortened_url value in your browser and you will get the URL redirection.
