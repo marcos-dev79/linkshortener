@@ -42,6 +42,6 @@ func ShortenLink(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result})
+	c.JSON(http.StatusOK, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result.InsertedID})
 
 }
