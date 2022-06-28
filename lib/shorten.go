@@ -3,6 +3,7 @@ package lib
 import (
 	"context"
 	"crypto/sha1"
+	"encoding/hex"
 	"linkshortener/db"
 	"net/http"
 	"time"
@@ -23,12 +24,12 @@ func ShortenLink(c *gin.Context) {
 	sec := now.Unix()
 	nsec := now.UnixNano()
 	hash := sha1.Sum([]byte(url.URL + string(rune(nsec))))
-	shorthash := hash[0:10]
+	shorthash := hash[0:8]
 
 	var link db.Link
 	link.Created = sec
-	link.Hash = string(hash[:])
-	link.Shorthash = string(shorthash[:])
+	link.Hash = hex.EncodeToString(hash[:])
+	link.Shorthash = hex.EncodeToString(shorthash[:])
 	link.URL = url.URL
 
 	mongoclient := db.Mongo_connect()
@@ -41,6 +42,6 @@ func ShortenLink(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, result)
+	c.JSON(http.StatusOK, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result})
 
 }
