@@ -4,4 +4,5 @@ WORKDIR /go/src/app
 COPY . .
 
 RUN go install linkshortener
+RUN go test -v
 CMD ["linkshortener"]

@@ -11,14 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ShortenLink(c *gin.Context) {
-
-	var url db.Request
-
-	if err := c.BindJSON(&url); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err})
-		panic(err)
-	}
+func ShortenLink(url db.Request) db.Link {
 
 	now := time.Now()
 	sec := now.Unix()
@@ -32,6 +25,20 @@ func ShortenLink(c *gin.Context) {
 	link.Shorthash = hex.EncodeToString(shorthash[:])
 	link.URL = url.URL
 
+	return link
+
+}
+
+func InsertLink(c *gin.Context) {
+	var url db.Request
+
+	if err := c.BindJSON(&url); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err})
+		panic(err)
+	}
+
+	link := ShortenLink(url)
+
 	mongoclient := db.Mongo_connect()
 
 	linksCollection := mongoclient.Database("linkshortener").Collection("links")
@@ -42,6 +49,5 @@ func ShortenLink(c *gin.Context) {
 		panic(err)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result.InsertedID})
-
+	c.JSON(http.StatusCreated, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result.InsertedID})
 }
