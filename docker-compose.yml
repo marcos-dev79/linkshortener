@@ -18,3 +18,11 @@ services:
     ports:
       - '27117:27017'
     restart: unless-stopped
+  godoc:
+    container_name: 'godoc'
+    build: './'
+    ports:
+      - '6060:6060'
+    volumes:
+      - './:/go/src/app'
+    command: bash -c "go get golang.org/x/tools/cmd/godoc && godoc -http=:6060" 

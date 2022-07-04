@@ -1,16 +1,13 @@
 package lib
 
 import (
-	"context"
 	"crypto/sha1"
 	"encoding/hex"
 	"linkshortener/db"
-	"net/http"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
+// This method generates the hash
 func ShortenLink(url db.Request) db.Link {
 
 	now := time.Now()
@@ -27,27 +24,4 @@ func ShortenLink(url db.Request) db.Link {
 
 	return link
 
-}
-
-func InsertLink(c *gin.Context) {
-	var url db.Request
-
-	if err := c.BindJSON(&url); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err})
-		panic(err)
-	}
-
-	link := ShortenLink(url)
-
-	mongoclient := db.Mongo_connect()
-
-	linksCollection := mongoclient.Database("linkshortener").Collection("links")
-	result, err := linksCollection.InsertOne(context.TODO(), link)
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
-		panic(err)
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"shortened_url": "http://localhost:8040/" + link.Shorthash, "id": result.InsertedID})
 }

@@ -9,10 +9,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-// This method performs the redirection of the shortened link.
+// This method provides count info for redirections
 // Usage:
-// Just hit http://localhost:8040/102f01e97fa6239c ( use the generated hash )
-func Redirect(c *gin.Context) {
+// http://localhost:8040/api/counter/102f01e97fa6239c ( Use your URL hash )
+func CounterInfo(c *gin.Context) {
 	shorthash := c.Param("hash")
 
 	mongoclient := db.Mongo_connect()
@@ -30,15 +30,7 @@ func Redirect(c *gin.Context) {
 	}
 
 	if len(results) > 0 {
-		results[0].Counter = results[0].Counter + 1
-		link := results[0]
-
-		filter := bson.M{"url": results[0].URL}
-		fields := bson.M{"$set": link}
-
-		linksCollection.UpdateOne(context.TODO(), filter, fields)
-
-		c.Redirect(http.StatusFound, results[0].URL)
+		c.JSON(http.StatusOK, gin.H{"url": results[0].URL, "counter": results[0].Counter})
 	} else {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Link not found 404"})
 	}
