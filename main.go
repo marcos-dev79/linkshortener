@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Entry point and routes for linkshortener
 func main() {
 	router := gin.Default()
 
