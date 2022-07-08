@@ -11,7 +11,7 @@ import (
 
 // This method performs the redirection of the shortened link.
 // Usage:
-// Just hit http://localhost:8040/102f01e97fa6239c ( use the generated hash )
+// Just hit http://localhost:8040/2J2VhO ( use the generated hash )
 func Redirect(c *gin.Context) {
 	shorthash := c.Param("hash")
 

@@ -21,8 +21,8 @@ The api will return the following:
 
 ```json
 {
-    "id": "62bdefab53bc797e3abc51b8",
-    "shortened_url": "http://localhost:8040/102f01e97fa6239c"
+    "id": "2775fc20bfdacc37822f7c8e1849b5bc567abfd6",
+    "shortened_url": "http://localhost:8040/2J2VhO"
 }
 ```
 
@@ -32,14 +32,14 @@ Then, just throw the shortened_url value in your browser and you will get the UR
 
 Every time you access a shortened URL, the app will compute it and persist into the database. Just access:
 
-http://localhost:8040/api/counter/102f01e97fa6239c ( Use your URL hash )
+http://localhost:8040/api/counter/2J2VhO ( Use your URL hash )
 
 It will show how many times the URL was accessed.
 
 ## Delete
 
 Send an http DELETE call to:
-http://localhost:8040/api/delete/102f01e97fa6239c ( Use your URL hash )
+http://localhost:8040/api/delete/2J2VhO ( Use your URL hash )
 
 ## Documentation
 

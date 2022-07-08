@@ -12,7 +12,7 @@ import (
 // This method deletes the redirection
 // Usage:
 // Send a http delete call to
-// http://localhost:8040/api/delete/102f01e97fa6239c ( Use your URL hash )
+// http://localhost:8040/api/delete/2J2VhO ( Use your URL hash )
 func DeleteLink(c *gin.Context) {
 	shorthash := c.Param("hash")
 
