@@ -11,7 +11,7 @@ import (
 
 // This method provides count info for redirections
 // Usage:
-// http://localhost:8040/api/counter/102f01e97fa6239c ( Use your URL hash )
+// http://localhost:8040/api/counter/2J2VhO ( Use your URL hash )
 func CounterInfo(c *gin.Context) {
 	shorthash := c.Param("hash")
 
